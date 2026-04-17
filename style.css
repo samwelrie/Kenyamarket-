@@ -1,0 +1,195 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+nav {
+  background: #1565c0;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth button {
+  padding: 8px 16px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.signup-btn {
+  background: #4caf50;
+  color: white;
+}
+
+header {
+  background: linear-gradient(135deg, #1565c0, #42a5f5);
+  color: white;
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.cta-btn {
+  background: #4caf50;
+  color: white;
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 50px;
+}
+
+.choose-role, .featured, .how-it-works {
+  padding: 3rem 1rem;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.choose-role h2, .featured h2, .how-it-works h2 {
+  margin-bottom: 2rem;
+  color: #1565c0;
+}
+
+.role-cards {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.role-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 320px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.role-card:hover {
+  transform: translateY(-10px);
+}
+
+.customer { border-top: 6px solid #4caf50; }
+.seller { border-top: 6px solid #ff9800; }
+
+.role-card h3 {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+.role-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.product {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+
+.product h3 {
+  color: #1565c0;
+}
+
+.product p {
+  color: #4caf50;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.steps {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.step {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 280px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+footer {
+  background: #1565c0;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

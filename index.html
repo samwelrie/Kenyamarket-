@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya Market - Best Deals in Kenya</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Kenya Market</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Sellers</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="auth">
+            <button class="login-btn">Login</button>
+            <button class="signup-btn">Sign Up</button>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Welcome to Kenya Market</h1>
+        <p class="tagline">Best Deals in Kenya</p>
+        <button class="cta-btn">Browse Products</button>
+    </header>
+
+    <section class="choose-role">
+        <h2>Choose Your Role</h2>
+        <div class="role-cards">
+            <div class="role-card customer">
+                <h3>I'm a Customer</h3>
+                <p>Browse and buy products</p>
+                <button class="role-btn">Browse Products</button>
+            </div>
+            <div class="role-card seller">
+                <h3>I'm a Seller</h3>
+                <p>Post your products and sell</p>
+                <button class="role-btn">Start Selling</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <h2>Featured Products</h2>
+        <div class="products" id="products">
+            <!-- Products loaded by JavaScript -->
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">1. Sign up as customer or seller</div>
+            <div class="step">2. Browse or post products</div>
+            <div class="step">3. Connect and trade directly</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Kenya Market. Connecting buyers and sellers.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
