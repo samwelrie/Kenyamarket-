@@ -46,29 +46,31 @@
 
     <script src="app.js"></script>
     <script>
-        const featured = [
-            { name: "Versace Eros", price: "KSh 4,200", img: "https://picsum.photos/id/1015/400/300" },
+        const featuredProducts = [
+            { name: "Versace Eros Perfume", price: "KSh 4,200", img: "https://picsum.photos/id/1015/400/300" },
             { name: "Nike Air Force 1", price: "KSh 5,999", img: "https://picsum.photos/id/201/400/300" },
             { name: "Samsung Galaxy A15", price: "KSh 17,500", img: "https://picsum.photos/id/160/400/300" },
-            { name: "Sony Headphones", price: "KSh 3,800", img: "https://picsum.photos/id/367/400/300" }
+            { name: "Sony Wireless Headphones", price: "KSh 3,800", img: "https://picsum.photos/id/367/400/300" }
         ];
 
-        function showFeatured() {
-            const container = document.getElementById("featuredGrid");
-            featured.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "product-card";
-                div.innerHTML = `
-                    <img src="\( {item.img}" alt=" \){item.name}">
-                    <h3>${item.name}</h3>
-                    <p class="price">${item.price}</p>
+        function displayFeatured() {
+            const grid = document.getElementById("featuredGrid");
+            grid.innerHTML = "";
+
+            featuredProducts.forEach(product => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <img src="\( {product.img}" alt=" \){product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">${product.price}</p>
                 `;
-                div.onclick = () => showLogin();
-                container.appendChild(div);
+                card.onclick = () => showLogin();
+                grid.appendChild(card);
             });
         }
 
-        document.addEventListener("DOMContentLoaded", showFeatured);
+        document.addEventListener("DOMContentLoaded", displayFeatured);
     </script>
 </body>
-    </html>
+</html>
