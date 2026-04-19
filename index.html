@@ -30,42 +30,47 @@
     <header>
         <h1>Welcome to Kenya Market</h1>
         <p>Best Deals in Kenya</p>
-        <button onclick="goToProducts()" class="browse-btn">Browse All Products</button>
+        
+        <div class="browse-card" onclick="goToProducts()">
+            <h2>Browse Products</h2>
+            <p>Discover thousands of products from trusted sellers across Kenya</p>
+            <span class="browse-btn">Shop Now →</span>
+        </div>
     </header>
 
     <!-- Featured Products -->
     <section class="featured">
         <h2>Featured Products</h2>
-        <div class="products-grid" id="featuredGrid">
-            <!-- Filled by JavaScript -->
-        </div>
+        <div class="products-grid" id="featuredGrid"></div>
     </section>
 
     <script src="app.js"></script>
     <script>
-        const featuredProducts = [
-            { name: "Versace Eros", price: "KSh 4,200", img: "https://via.placeholder.com/300x250/8e44ad/fff?text=Versace" },
-            { name: "Nike Air Force 1", price: "KSh 5,999", img: "https://via.placeholder.com/300x250/3498db/fff?text=Nike" },
-            { name: "Samsung Galaxy A15", price: "KSh 17,500", img: "https://via.placeholder.com/300x250/2ecc71/fff?text=Samsung" },
-            { name: "Wireless Headphones", price: "KSh 2,900", img: "https://via.placeholder.com/300x250/e74c3c/fff?text=Headphones" }
+        const featured = [
+            { name: "Versace Eros", price: "KSh 4,200", color: "#8e44ad" },
+            { name: "Nike Air Force 1", price: "KSh 5,999", color: "#3498db" },
+            { name: "Samsung Galaxy A15", price: "KSh 17,500", color: "#2ecc71" },
+            { name: "Sony Headphones", price: "KSh 3,800", color: "#e74c3c" }
         ];
 
-        function displayFeatured() {
-            const grid = document.getElementById('featuredGrid');
-            featuredProducts.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="\( {product.img}" alt=" \){product.name}">
-                    <h3>${product.name}</h3>
-                    <p class="price">${product.price}</p>
-                    <button onclick="showLogin()" class="buy-btn">View Details</button>
+        function showFeatured() {
+            const container = document.getElementById("featuredGrid");
+            featured.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "product-card";
+                div.style.backgroundColor = item.color;
+                div.innerHTML = `
+                    <div style="height:180px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; color:white; font-size:18px;">
+                        ${item.name}
+                    </div>
+                    <h3 style="color:white;">${item.name}</h3>
+                    <p style="color:white; font-weight:bold;">${item.price}</p>
                 `;
-                grid.appendChild(card);
+                container.appendChild(div);
             });
         }
 
-        document.addEventListener('DOMContentLoaded', displayFeatured);
+        document.addEventListener("DOMContentLoaded", showFeatured);
     </script>
 </body>
-        </html>
+                </html>
