@@ -18,8 +18,8 @@
         <div class="nav-links">
             <a href="index.html" class="active">Home</a>
             <a href="products.html">Products</a>
-            <a href="#" onclick="showLogin()">I'm a Customer</a>
-            <a href="#" onclick="showLogin()">I'm a Seller</a>
+            <a href="#" onclick="showLogin()">Login</a>
+            <a href="#" onclick="showLogin()">Sign Up</a>
         </div>
     </nav>
 
@@ -27,9 +27,15 @@
     <header>
         <h1>Welcome to Kenya Market</h1>
         <p>Best Deals in Kenya</p>
-        <button onclick="goToProducts()" style="margin-top: 30px;">Browse Products</button>
+        
+        <div class="role-buttons">
+            <button onclick="showLogin()" class="role-btn customer">I'm a Customer</button>
+            <button onclick="showLogin()" class="role-btn seller">I'm a Seller</button>
+        </div>
+
+        <button onclick="goToProducts()" class="browse-btn">Browse Products</button>
     </header>
 
     <script src="app.js"></script>
 </body>
-    </html>
+</html>
