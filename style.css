@@ -159,4 +159,71 @@ header {
         padding: 12px 0;
         font-size: 18px;
     }
+    .login-page {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
+
+.login-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-box h2 {
+    color: #0a66c2;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn { background: #0a66c2; color: white; }
+.signup-btn { background: #27ae60; color: white; }
+.google-btn { 
+    background: #fff; 
+    color: #333; 
+    border: 2px solid #ddd;
+}
+
+.divider {
+    margin: 20px 0;
+    color: #888;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #eee;
+        }
