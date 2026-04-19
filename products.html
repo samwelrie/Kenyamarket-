@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Kenya Market</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .offer-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 20px;
+            color: white;
+        }
+        .hot { background: #e74c3c; }
+        .limited { background: #f39c12; }
+        .new { background: #27ae60; }
+
+        .product-info {
+            padding: 15px;
+        }
+        .product-info h3 {
+            margin: 8px 0 5px;
+            color: #2c3e50;
+        }
+        .price {
+            font-size: 19px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #95a5a6;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Marquee -->
+    <div class="marquee">
+        <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Safe payment coming soon •</p>
+    </div>
+
+    <nav>
+        <div class="logo">Kenya Market</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html" class="active">Products</a>
+            <a href="#" onclick="showLogin()">I'm a Customer</a>
+            <a href="#" onclick="showLogin()">I'm a Seller</a>
+        </div>
+    </nav>
+
+    <div style="padding: 25px; max-width: 1200px; margin: 0 auto;">
+        <input type="text" id="searchBar" placeholder="Search products..." 
+               style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 25px; border-radius: 8px;">
+
+        <div id="productsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px;">
+            <!-- Products go here -->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const products = [
+            {
+                name: "Versace Eros Perfume",
+                oldPrice: "KSh 6,500",
+                price: "KSh 4,200",
+                tag: "hot",
+                img: "https://via.placeholder.com/300x220/8e44ad/ffffff?text=Versace+Eros"
+            },
+            {
+                name: "Nike Air Force 1",
+                oldPrice: "KSh 8,900",
+                price: "KSh 5,999",
+                tag: "limited",
+                img: "https://via.placeholder.com/300x220/3498db/ffffff?text=Nike+AF1"
+            },
+            {
+                name: "Samsung Galaxy A15",
+                oldPrice: "KSh 22,000",
+                price: "KSh 17,500",
+                tag: "new",
+                img: "https://via.placeholder.com/300x220/2ecc71/ffffff?text=Galaxy+A15"
+            },
+            {
+                name: "Leather Jacket",
+                oldPrice: "KSh 5,800",
+                price: "KSh 3,999",
+                tag: "hot",
+                img: "https://via.placeholder.com/300x220/e74c3c/ffffff?text=Leather+Jacket"
+            }
+        ];
+
+        function displayProducts(filteredProducts) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="\( {product.img}" alt=" \){product.name}">
+                    <span class="offer-tag \( {product.tag}"> \){product.tag.toUpperCase()}</span>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>
+                            <span class="old-price">${product.oldPrice}</span>
+                            <span class="price">${product.price}</span>
+                        </p>
+                        <button onclick="viewProduct('${product.name}')" 
+                                style="margin-top:12px; width:100%; padding:10px; background:#0a66c2; color:white; border:none; border-radius:8px; cursor:pointer;">
+                            View Details
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function viewProduct(name) {
+            showLogin();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProducts(products);
+
+            const searchBar = document.getElementById('searchBar');
+            searchBar.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+                displayProducts(filtered);
+            });
+        });
+    </script>
+</body>
+</html>
