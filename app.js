@@ -1,42 +1,46 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyDrq36ffLtjItRJg-UO5l4yJqtpyeCucK8",
-  authDomain: "kenyamarket.firebaseapp.com",
-  projectId: "kenyamarket",
-  storageBucket: "kenyamarket.appspot.com"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-window.onload = function() {
-  loadProducts();
-};
-
-function loadProducts() {
-  const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML = "";
-
-  db.collection("products").get().then(snapshot => {
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      
-      const productHTML = `
-        <div class="product">
-          <h3>${data.name}</h3>
-          <p>KES ${data.price}</p>
-          <button class="order-btn" onclick="orderNow('${data.name}', ${data.price})">
-            Order Now
-          </button>
-        </div>
-      `;
-      
-      productsDiv.innerHTML += productHTML;
-    });
-  });
+// Navigation
+function showLogin() {
+    window.location.href = "login.html";
 }
 
-function orderNow(productName, price) {
-  const message = `Hi, I want to order *${productName}* for KES ${price}. Please confirm.`;
-  const whatsappUrl = `https://wa.me/254114908449?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, "_blank");
+function goToProducts() {
+    window.location.href = "products.html";
 }
+
+// Login & Signup
+function login() {
+    const email = document.getElementById("email").value.trim();
+    if (email) {
+        alert("✅ Login successful!\nWelcome to Kenya Market.");
+        window.location.href = "products.html";
+    } else {
+        alert("Please enter your email address");
+    }
+}
+
+function signup() {
+    const email = document.getElementById("email").value.trim();
+    if (email) {
+        alert("✅ Account created successfully!\nYou can now browse products.");
+        window.location.href = "products.html";
+    } else {
+        alert("Please enter your email address");
+    }
+}
+
+// Search functionality (for products.html)
+document.addEventListener("DOMContentLoaded", () => {
+    const searchBar = document.getElementById("searchBar");
+    
+    if (searchBar) {
+        searchBar.addEventListener("keyup", function() {
+            const term = this.value.toLowerCase();
+            const productCards = document.querySelectorAll(".product-card");
+            
+            productCards.forEach(card => {
+                const title = card.querySelector("h3").textContent.toLowerCase();
+                card.style.display = title.includes(term) ? "block" : "none";
+            });
+        });
+    }
+});
