@@ -18,7 +18,6 @@ body {
     overflow: hidden;
     white-space: nowrap;
     font-size: 16px;
-    font-weight: 500;
 }
 
 .marquee p {
@@ -40,9 +39,6 @@ nav {
     justify-content: space-between;
     align-items: center;
     color: white;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .logo {
@@ -64,12 +60,11 @@ nav {
 .nav-links a {
     color: white;
     text-decoration: none;
-    font-weight: 500;
 }
 
 /* Hero */
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     text-align: center;
     padding: 90px 20px;
@@ -84,16 +79,10 @@ header {
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.browse-card:hover {
-    transform: scale(1.05);
 }
 
 .browse-card h2 {
     color: #0a66c2;
-    margin-bottom: 10px;
 }
 
 .browse-btn {
@@ -106,7 +95,7 @@ header {
     font-weight: bold;
 }
 
-/* Featured Section */
+/* Featured Products */
 .featured {
     padding: 50px 20px;
     background: #f8f9fa;
@@ -115,7 +104,6 @@ header {
 .featured h2 {
     text-align: center;
     margin-bottom: 30px;
-    color: #2c3e50;
 }
 
 .products-grid {
@@ -126,19 +114,13 @@ header {
     margin: 0 auto;
 }
 
-/* Product Card - This is the most important part */
 .product-card {
     background: white;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     cursor: pointer;
-    transition: transform 0.2s;
     text-align: center;
-}
-
-.product-card:hover {
-    transform: scale(1.03);
 }
 
 .product-card img {
@@ -149,7 +131,6 @@ header {
 
 .product-card h3 {
     margin: 12px 0 5px;
-    font-size: 16px;
     color: #333;
 }
 
@@ -157,14 +138,69 @@ header {
     font-size: 18px;
     font-weight: bold;
     color: #27ae60;
-    margin-bottom: 15px;
 }
 
-/* Mobile Menu */
+/* Login Page Styles */
+.login-page {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-box h2 {
+    color: #0a66c2;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn { background: #0a66c2; color: white; }
+.signup-btn { background: #27ae60; color: white; }
+.google-btn { 
+    background: white; 
+    color: #333; 
+    border: 2px solid #ddd;
+}
+
+.divider {
+    margin: 20px 0;
+    color: #777;
+}
+
+/* Mobile */
 @media (max-width: 768px) {
-    .hamburger {
-        display: block;
-    }
+    .hamburger { display: block; }
     
     .nav-links {
         display: none;
@@ -177,12 +213,5 @@ header {
         padding: 20px;
     }
     
-    .nav-links.active {
-        display: flex;
-    }
-    
-    .nav-links a {
-        padding: 12px 0;
-        font-size: 18px;
-    }
+    .nav-links.active { display: flex; }
     }
