@@ -3,74 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenya Market</title>
+    <title>Products - Kenya Market</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Marquee -->
     <div class="marquee">
-        <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Over 500 happy customers • Safe payment coming soon •</p>
+        <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Safe payment coming soon •</p>
     </div>
 
-    <!-- Navigation -->
     <nav>
         <div class="logo">Kenya Market</div>
         <div class="hamburger" onclick="toggleMenu()">☰</div>
         <div class="nav-links" id="navMenu">
             <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
+            <a href="products.html" class="active">Products</a>
             <a href="#" onclick="showLogin()">I'm a Customer</a>
             <a href="#" onclick="showLogin()">I'm a Seller</a>
-            <a href="#" onclick="showLogin()">Login</a>
-            <a href="#" onclick="showLogin()">Sign Up</a>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header>
-        <h1>Welcome to Kenya Market</h1>
-        <p>Best Deals in Kenya</p>
-        
-        <div class="browse-card" onclick="goToProducts()">
-            <h2>Browse Products</h2>
-            <p>Discover thousands of products from trusted sellers across Kenya</p>
-            <span class="browse-btn">Shop Now →</span>
-        </div>
-    </header>
+    <div style="padding: 25px; max-width: 1200px; margin: 0 auto;">
+        <input type="text" id="searchBar" placeholder="Search products..." style="width:100%; padding:15px; font-size:18px; margin-bottom:25px; border-radius:8px;">
 
-    <!-- Featured Products -->
-    <section class="featured">
-        <h2>Featured Products</h2>
-        <div class="products-grid" id="featuredGrid"></div>
-    </section>
+        <div id="productsGrid" class="products-grid"></div>
+    </div>
 
     <script src="app.js"></script>
     <script>
-        const featured = [
-            { name: "Versace Eros", price: "KSh 4,200", color: "#8e44ad" },
-            { name: "Nike Air Force 1", price: "KSh 5,999", color: "#3498db" },
-            { name: "Samsung Galaxy A15", price: "KSh 17,500", color: "#2ecc71" },
-            { name: "Sony Headphones", price: "KSh 3,800", color: "#e74c3c" }
+        const products = [
+            { name: "Versace Eros Perfume", price: "KSh 4,200", oldPrice: "KSh 6,500", img: "https://picsum.photos/id/1015/400/300" },
+            { name: "Nike Air Force 1", price: "KSh 5,999", oldPrice: "KSh 8,900", img: "https://picsum.photos/id/201/400/300" },
+            { name: "Samsung Galaxy A15", price: "KSh 17,500", oldPrice: "KSh 22,000", img: "https://picsum.photos/id/160/400/300" },
+            { name: "Sony Wireless Headphones", price: "KSh 3,800", oldPrice: "KSh 5,500", img: "https://picsum.photos/id/367/400/300" },
+            { name: "Leather Jacket", price: "KSh 4,500", oldPrice: "KSh 7,200", img: "https://picsum.photos/id/201/400/300" }
         ];
 
-        function showFeatured() {
-            const container = document.getElementById("featuredGrid");
-            featured.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "product-card";
-                div.style.backgroundColor = item.color;
-                div.innerHTML = `
-                    <div style="height:180px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; color:white; font-size:18px;">
-                        ${item.name}
+        function displayProducts(filteredProducts) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="\( {product.img}" alt=" \){product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>
+                            <span class="old-price">${product.oldPrice}</span>
+                            <span class="price">${product.price}</span>
+                        </p>
                     </div>
-                    <h3 style="color:white;">${item.name}</h3>
-                    <p style="color:white; font-weight:bold;">${item.price}</p>
                 `;
-                container.appendChild(div);
+                card.onclick = () => showLogin();
+                grid.appendChild(card);
             });
         }
 
-        document.addEventListener("DOMContentLoaded", showFeatured);
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProducts(products);
+
+            const searchBar = document.getElementById('searchBar');
+            searchBar.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+                displayProducts(filtered);
+            });
+        });
     </script>
 </body>
-                </html>
+    </html>
