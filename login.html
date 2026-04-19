@@ -6,17 +6,22 @@
     <title>Login - Kenya Market</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background: linear-gradient(135deg, #0a66c2, #1e90ff); min-height: 100vh;">
-    
-    <div class="login-container">
-        <h2>Kenya Market</h2>
-        <input type="email" id="email" placeholder="Email address" required>
-        <input type="password" id="password" placeholder="Password" required>
-        
-        <button class="btn login-btn" onclick="login()">Log in</button>
-        <button class="btn signup-btn" onclick="signup()">Create account</button>
-        
-        <p style="margin-top: 25px; color: #666;">Or continue with</p>
+<body>
+    <div class="login-page">
+        <div class="login-box">
+            <h2>Kenya Market</h2>
+            <p style="margin-bottom: 30px; color: #666;">Sign in to continue</p>
+            
+            <input type="email" id="email" placeholder="Email address" required>
+            <input type="password" id="password" placeholder="Password" required>
+            
+            <button class="btn login-btn" onclick="login()">Log in</button>
+            <button class="btn signup-btn" onclick="signup()">Create Account</button>
+            
+            <div class="divider">or</div>
+            
+            <button class="btn google-btn">Continue with Google</button>
+        </div>
     </div>
 
     <script src="app.js"></script>
