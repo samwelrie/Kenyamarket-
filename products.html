@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Marquee -->
     <div class="marquee">
         <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Safe payment coming soon •</p>
     </div>
 
+    <!-- Navigation -->
     <nav>
         <div class="logo">Kenya Market</div>
         <div class="hamburger" onclick="toggleMenu()">☰</div>
@@ -22,8 +24,9 @@
         </div>
     </nav>
 
-    <div style="padding: 25px; max-width: 1200px; margin: 0 auto;">
-        <input type="text" id="searchBar" placeholder="Search products..." style="width:100%; padding:15px; font-size:18px; margin-bottom:25px; border-radius:8px;">
+    <div style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
+        <input type="text" id="searchBar" placeholder="Search products..." 
+               style="width: 100%; padding: 15px; font-size: 18px; border-radius: 12px; margin-bottom: 30px;">
 
         <div id="productsGrid" class="products-grid"></div>
     </div>
@@ -64,11 +67,13 @@
             displayProducts(products);
 
             const searchBar = document.getElementById('searchBar');
-            searchBar.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-                displayProducts(filtered);
-            });
+            if (searchBar) {
+                searchBar.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+                    displayProducts(filtered);
+                });
+            }
         });
     </script>
 </body>
