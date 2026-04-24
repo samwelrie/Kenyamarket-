@@ -7,73 +7,47 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Marquee -->
     <div class="marquee">
         <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Safe payment coming soon •</p>
     </div>
 
-    <!-- Navigation -->
     <nav>
         <div class="logo">Kenya Market</div>
         <div class="hamburger" onclick="toggleMenu()">☰</div>
         <div class="nav-links" id="navMenu">
             <a href="index.html">Home</a>
             <a href="products.html" class="active">Products</a>
-            <a href="#" onclick="showLogin()">I'm a Customer</a>
-            <a href="#" onclick="showLogin()">I'm a Seller</a>
+            <a href="#" onclick="showLogin()">Login</a>
         </div>
     </nav>
 
-    <div style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
-        <input type="text" id="searchBar" placeholder="Search products..." 
-               style="width: 100%; padding: 15px; font-size: 18px; border-radius: 12px; margin-bottom: 30px;">
-
+    <div style="padding: 20px; max-width: 1100px; margin: 0 auto;">
+        <h1 style="text-align:center; margin-bottom:30px;">Our Products</h1>
+        
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
     <script src="app.js"></script>
     <script>
         const products = [
-            { name: "Versace Eros Perfume", price: "KSh 4,200", oldPrice: "KSh 6,500", img: "https://picsum.photos/id/1015/400/300" },
-            { name: "Nike Air Force 1", price: "KSh 5,999", oldPrice: "KSh 8,900", img: "https://picsum.photos/id/201/400/300" },
-            { name: "Samsung Galaxy A15", price: "KSh 17,500", oldPrice: "KSh 22,000", img: "https://picsum.photos/id/160/400/300" },
-            { name: "Sony Wireless Headphones", price: "KSh 3,800", oldPrice: "KSh 5,500", img: "https://picsum.photos/id/367/400/300" },
-            { name: "Leather Jacket", price: "KSh 4,500", oldPrice: "KSh 7,200", img: "https://picsum.photos/id/201/400/300" }
+            { name: "Versace Eros Perfume", price: "KSh 4,200", img: "https://picsum.photos/id/1015/400/300" },
+            { name: "Nike Air Force 1", price: "KSh 5,999", img: "https://picsum.photos/id/201/400/300" },
+            { name: "Samsung Galaxy A15", price: "KSh 17,500", img: "https://picsum.photos/id/160/400/300" },
+            { name: "Sony Wireless Headphones", price: "KSh 3,800", img: "https://picsum.photos/id/367/400/300" }
         ];
 
-        function displayProducts(filteredProducts) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
+        const grid = document.getElementById("productsGrid");
 
-            filteredProducts.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="\( {product.img}" alt=" \){product.name}">
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p>
-                            <span class="old-price">${product.oldPrice}</span>
-                            <span class="price">${product.price}</span>
-                        </p>
-                    </div>
-                `;
-                card.onclick = () => showLogin();
-                grid.appendChild(card);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            displayProducts(products);
-
-            const searchBar = document.getElementById('searchBar');
-            if (searchBar) {
-                searchBar.addEventListener('input', (e) => {
-                    const term = e.target.value.toLowerCase();
-                    const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-                    displayProducts(filtered);
-                });
-            }
+        products.forEach(product => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.innerHTML = `
+                <img src="\( {product.img}" alt=" \){product.name}">
+                <h3>${product.name}</h3>
+                <p class="price">${product.price}</p>
+            `;
+            card.onclick = () => showLogin();
+            grid.appendChild(card);
         });
     </script>
 </body>
