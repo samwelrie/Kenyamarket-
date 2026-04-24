@@ -1,52 +1,118 @@
-// ================== LOGIN SYSTEM ==================
-let currentUser = null;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - Kenya Market</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Kenya Market - Seller</div>
+        <div style="display:flex; align-items:center; gap:15px;">
+            <span id="sellerName" style="color:white; font-weight:500;">Loading...</span>
+            <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;">Logout</button>
+        </div>
+    </nav>
 
-function handleLogin() {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    <div style="padding:30px; max-width:1100px; margin:0 auto;">
+        <h1 style="margin-bottom:10px;">Seller Dashboard</h1>
+        <p id="welcomeText" style="font-size:19px; color:#2c3e50; margin-bottom:40px;">Welcome back!</p>
 
-    if (!email || !password) {
-        alert("Please enter email and password");
-        return;
-    }
+        <button onclick="showAddForm()" class="add-product-btn" style="background:#27ae60; color:white; padding:15px 30px; font-size:18px; border:none; border-radius:12px; cursor:pointer;">
+            + Add New Product
+        </button>
 
-    // Demo accounts
-    if (email === "seller@kenya.com" && password === "123456") {
-        currentUser = { name: "Mike Seller", role: "seller" };
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        window.location.href = "seller-dashboard.html";
-        
-    } else if (email === "customer@kenya.com" && password === "123456") {
-        currentUser = { name: "John Doe", role: "customer" };
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        window.location.href = "index.html";
-        
-    } else {
-        alert("Wrong email or password!\n\nTry these:\n\nSeller: seller@kenya.com / 123456\nCustomer: customer@kenya.com / 123456");
-    }
-}
+        <div id="addForm" style="display:none; background:#f8f9fa; padding:25px; border-radius:15px; margin:25px 0;">
+            <h2>Add New Product</h2>
+            <input type="text" id="productName" placeholder="Product Name" style="width:100%; padding:12px; margin:10px 0; border-radius:8px;">
+            <input type="text" id="productPrice" placeholder="Price (e.g. KSh 2,500)" style="width:100%; padding:12px; margin:10px 0; border-radius:8px;">
+            <textarea id="productDesc" placeholder="Description (optional)" style="width:100%; padding:12px; height:90px; margin:10px 0; border-radius:8px;"></textarea>
+            
+            <div style="margin-top:15px;">
+                <button onclick="addProduct()" style="background:#27ae60; color:white; padding:12px 25px; border:none; border-radius:8px; cursor:pointer;">Post Product</button>
+                <button onclick="hideAddForm()" style="background:#95a5a6; color:white; padding:12px 25px; border:none; border-radius:8px; cursor:pointer; margin-left:10px;">Cancel</button>
+            </div>
+        </div>
 
-// Check if already logged in
-function checkLoginStatus() {
-    const savedUser = localStorage.getItem("currentUser");
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-    }
-}
+        <h2 style="margin:35px 0 15px;">My Products</h2>
+        <div id="myProducts" class="products-grid"></div>
+    </div>
 
-function logout() {
-    localStorage.removeItem("currentUser");
-    window.location.href = "login.html";
-}
+    <script src="app.js"></script>
+    <script>
+        function loadSellerDashboard() {
+            const user = JSON.parse(localStorage.getItem("currentUser"));
+            
+            if (!user || user.role !== "seller") {
+                window.location.href = "login.html";
+                return;
+            }
 
-function showLogin() {
-    window.location.href = "login.html";
-}
+            document.getElementById("sellerName").textContent = user.name;
+            document.getElementById("welcomeText").innerHTML = `Hello <strong>${user.name}</strong> 👋`;
 
-// Make functions available
-window.handleLogin = handleLogin;
-window.logout = logout;
-window.showLogin = showLogin;
-window.checkLoginStatus = checkLoginStatus;
+            let products = JSON.parse(localStorage.getItem("sellerProducts")) || [];
+            displayMyProducts(products);
+        }
 
-document.addEventListener("DOMContentLoaded", checkLoginStatus);
+        function showAddForm() {
+            document.getElementById("addForm").style.display = "block";
+        }
+
+        function hideAddForm() {
+            document.getElementById("addForm").style.display = "none";
+        }
+
+        function addProduct() {
+            const name = document.getElementById("productName").value.trim();
+            const price = document.getElementById("productPrice").value.trim();
+
+            if (!name || !price) {
+                alert("Please enter product name and price");
+                return;
+            }
+
+            let products = JSON.parse(localStorage.getItem("sellerProducts")) || [];
+            
+            products.unshift({
+                name: name,
+                price: price,
+                description: document.getElementById("productDesc").value.trim() || "No description provided"
+            });
+
+            localStorage.setItem("sellerProducts", JSON.stringify(products));
+            
+            hideAddForm();
+            displayMyProducts(products);
+
+            document.getElementById("productName").value = "";
+            document.getElementById("productPrice").value = "";
+            document.getElementById("productDesc").value = "";
+        }
+
+        function displayMyProducts(products) {
+            const container = document.getElementById("myProducts");
+            container.innerHTML = "";
+
+            if (products.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#777; padding:20px;">You haven't added any products yet.</p>`;
+                return;
+            }
+
+            products.forEach(product => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p class="price">${product.price}</p>
+                    <small>${product.description}</small>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.onload = loadSellerDashboard;
+    </script>
+</body>
+                    </html>
