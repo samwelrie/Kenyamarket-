@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - Kenya Market</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Kenya Market</div>
+        <div style="display:flex; align-items:center; gap:15px;">
+            <span id="sellerName" style="color:white; font-weight:500;"></span>
+            <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;">Logout</button>
+        </div>
+    </nav>
 
+    <div style="padding:30px; max-width:1100px; margin:0 auto;">
+        <h1>Welcome to Your Dashboard</h1>
+        <p id="welcomeText" style="font-size:18px; color:#555; margin-bottom:30px;"></p>
+
+        <!-- Add Product Button -->
+        <button onclick="showAddForm()" class="add-product-btn">
+            + Add New Product
+        </button>
+
+        <!-- Add Product Form -->
+        <div id="addForm" style="display:none; background:#f8f9fa; padding:25px; border-radius:15px; margin:25px 0;">
+            <h2>Add New Product</h2>
+            <input type="text" id="productName" placeholder="Product Name" style="width:100%; padding:12px; margin:10px 0;">
+            <input type="text" id="productPrice" placeholder="Price (e.g. KSh 4,500)" style="width:100%; padding:12px; margin:10px 0;">
+            <textarea id="productDesc" placeholder="Short description" style="width:100%; padding:12px; height:80px; margin:10px 0;"></textarea>
+            <button onclick="addProduct()" style="background:#27ae60; color:white; padding:12px 30px; border:none; border-radius:8px; cursor:pointer;">Post Product</button>
+            <button onclick="hideAddForm()" style="background:#95a5a6; color:white; padding:12px 25px; border:none; border-radius:8px; cursor:pointer; margin-left:10px;">Cancel</button>
+        </div>
+
+        <h2 style="margin-top:30px;">My Products</h2>
+        <div id="myProducts" class="products-grid"></div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let myProducts = [];
+
+        function loadSellerData() {
+            const user = JSON.parse(localStorage.getItem("currentUser"));
+            if (!user || user.role !== "seller") {
+                window.location.href = "login.html";
+                return;
+            }
+
+            document.getElementById("sellerName").textContent = user.name;
+            document.getElementById("welcomeText").innerHTML = `Hello <strong>${user.name}</strong>, manage your store here.`;
+
+            // Load saved products
+            myProducts = JSON.parse(localStorage.getItem("sellerProducts")) || [];
+            displayMyProducts();
+        }
+
+        function showAddForm() {
+            document.getElementById("addForm").style.display = "block";
+        }
+
+        function hideAddForm() {
+            document.getElementById("addForm").style.display = "none";
+        }
+
+        function addProduct() {
+            const name = document.getElementById("productName").value;
+            const price = document.getElementById("productPrice").value;
+            const desc = document.getElementById("productDesc").value;
+
+            if (!name || !price) {
+                alert("Product name and price are required");
+                return;
+            }
+
+            const newProduct = {
+                name: name,
+                price: price,
+                description: desc || "No description",
+                date: new Date().toLocaleDateString()
+            };
+
+            myProducts.unshift(newProduct);
+            localStorage.setItem("sellerProducts", JSON.stringify(myProducts));
+
+            hideAddForm();
+            displayMyProducts();
+
+            // Clear form
+            document.getElementById("productName").value = "";
+            document.getElementById("productPrice").value = "";
+            document.getElementById("productDesc").value = "";
+        }
+
+        function displayMyProducts() {
+            const container = document.getElementById("myProducts");
+            container.innerHTML = "";
+
+            if (myProducts.length === 0) {
+                container.innerHTML = "<p style='grid-column:1/-1;text-align:center;color:#777;'>You haven't added any products yet.</p>";
+                return;
+            }
+
+            myProducts.forEach(product => {
+                const div = document.createElement("div");
+                div.className = "product-card";
+                div.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p class="price">${product.price}</p>
+                    <small>${product.description}</small>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Load the dashboard
+        window.onload = loadSellerData;
+    </script>
+</body>
+              </html>
