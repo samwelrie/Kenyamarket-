@@ -3,72 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenya Market</title>
+    <title>Kenya Market - Buy & Sell Locally</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Marquee -->
-    <div class="marquee">
-        <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Over 500 happy customers • Safe payment coming soon •</p>
-    </div>
-
     <!-- Navigation -->
     <nav>
         <div class="logo">Kenya Market</div>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
         <div class="nav-links" id="navMenu">
             <a href="index.html">Home</a>
             <a href="products.html">Products</a>
-            <a href="#" onclick="showLogin()">I'm a Customer</a>
-            <a href="#" onclick="showLogin()">I'm a Seller</a>
-            <a href="#" onclick="showLogin()">Login</a>
-            <a href="#" onclick="showLogin()">Sign Up</a>
+            <a href="seller-dashboard.html">Sell on Kenya Market</a>
         </div>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
     </nav>
 
-    <!-- Hero -->
-    <header>
-        <h1>Welcome to Kenya Market</h1>
-        <p>Best Deals in Kenya</p>
-        
-        <div class="browse-card" onclick="goToProducts()">
-            <h2>Browse Products</h2>
-            <p>Discover thousands of products from trusted sellers across Kenya</p>
-            <span class="browse-btn">Shop Now →</span>
+    <!-- Search Bar -->
+    <div style="background:#0a66c2; padding:20px 0; text-align:center;">
+        <input type="text" id="searchInput" placeholder="Search products..." 
+               style="width:70%; max-width:700px; padding:15px; font-size:17px; border-radius:50px; border:none;">
+    </div>
+
+    <!-- Categories -->
+    <div style="padding:20px; text-align:center; background:white;">
+        <h2 style="margin-bottom:15px;">Shop by Category</h2>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;">
+            <div class="category">📱 Phones & Accessories</div>
+            <div class="category">👟 Fashion</div>
+            <div class="category">🏠 Home & Kitchen</div>
+            <div class="category">💻 Electronics</div>
+            <div class="category">🛵 Motorbikes</div>
         </div>
-    </header>
+    </div>
 
-    <!-- Featured Products -->
-    <section class="featured">
-        <h2>Featured Products</h2>
-        <div class="products-grid" id="featuredGrid"></div>
-    </section>
+    <!-- Products -->
+    <div style="max-width:1200px; margin:30px auto; padding:0 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2>Featured Products</h2>
+            <select id="priceFilter" style="padding:10px; border-radius:8px;">
+                <option value="">Sort by Price</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+            </select>
+        </div>
 
-    <script src="app.js"></script>
+        <div id="productsGrid" class="products-grid"></div>
+    </div>
+
     <script>
-        const featuredProducts = [
-            { name: "Versace Eros Perfume", price: "KSh 4,200", img: "https://source.unsplash.com/random/300x300/?perfume" },
-            { name: "Nike Air Force 1", price: "KSh 5,999", img: "https://source.unsplash.com/random/300x300/?shoes" },
-            { name: "Samsung Galaxy A15", price: "KSh 17,500", img: "https://source.unsplash.com/random/300x300/?phone" },
-            { name: "Sony Wireless Headphones", price: "KSh 3,800", img: "https://source.unsplash.com/random/300x300/?headphones" }
+        const products = [
+            { id:1, name:"iPhone 13", price:45000, category:"Phones", image:"https://picsum.photos/id/20/300/300", rating:4.8 },
+            { id:2, name:"Wireless Headphones", price:3500, category:"Electronics", image:"https://picsum.photos/id/60/300/300", rating:4.5 },
+            { id:3, name:"Men's Leather Jacket", price:6500, category:"Fashion", image:"https://picsum.photos/id/201/300/300", rating:4.9 },
+            { id:4, name:"Smart LED TV 43 inch", price:28500, category:"Electronics", image:"https://picsum.photos/id/180/300/300", rating:4.7 },
+            { id:5, name:"Samsung Galaxy S22", price:52000, category:"Phones", image:"https://picsum.photos/id/29/300/300", rating:4.6 },
+            { id:6, name:"Modern Coffee Maker", price:4200, category:"Home", image:"https://picsum.photos/id/201/300/300", rating:4.3 }
         ];
 
-        function displayFeatured() {
-            const grid = document.getElementById("featuredGrid");
-            grid.innerHTML = "";
+        function displayProducts(filteredProducts) {
+            const container = document.getElementById("productsGrid");
+            container.innerHTML = "";
 
-            featuredProducts.forEach(product => {
+            filteredProducts.forEach(product => {
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.innerHTML = `
-                    <img src="\( {product.img}" alt=" \){product.name}">
+                    <img src="\( {product.image}" alt=" \){product.name}">
                     <h3>${product.name}</h3>
-                    <p class="price">${product.price}</p>
+                    <p class="price">KSh ${product.price.toLocaleString()}</p>
+                    <p style="color:#27ae60; font-size:14px;">★ ${product.rating} • 234 sold</p>
                 `;
-                card.onclick = () => showLogin();
-                grid.appendChild(card);
+                container.appendChild(card);
             });
         }
 
-        document.addEventListener("DOMContentLoaded", displayFeatured);
+        // Initial load
+        window.onload = () => displayProducts(products);
     </script>
+</body>
+</html>
