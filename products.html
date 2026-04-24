@@ -22,35 +22,40 @@
                style="width:100%; padding:15px; font-size:17px; border:1px solid #ddd; border-radius:50px; margin-bottom:25px;">
 
         <h2>All Products</h2>
-        
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
     <script>
-        const products = [
-            { name: "Versace Eros Perfume", price: 4200, oldPrice: 6500, image: "https://picsum.photos/id/201/300/300" },
-            { name: "Nike Air Force 1", price: 5999, oldPrice: 8900, image: "https://picsum.photos/id/60/300/300" },
-            { name: "Samsung Galaxy A15", price: 17500, oldPrice: 22000, image: "https://picsum.photos/id/29/300/300" },
-            { name: "Sony Wireless Headphones", price: 3800, oldPrice: 5500, image: "https://picsum.photos/id/180/300/300" },
-            { name: "Leather Jacket", price: 4500, oldPrice: 7200, image: "https://picsum.photos/id/201/300/300" },
-            { name: "Diamond Ring", price: 30000, oldPrice: 45000, image: "https://picsum.photos/id/237/300/300" }
-        ];
-
         function renderProducts() {
+            const products = JSON.parse(localStorage.getItem("marketProducts")) || [];
             const container = document.getElementById("productsGrid");
             container.innerHTML = "";
+
+            if (products.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:#777; padding:60px;">No products available yet.<br>Sellers haven't posted anything.</p>`;
+                return;
+            }
 
             products.forEach(product => {
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.innerHTML = `
-                    <img src="\( {product.image}" alt=" \){product.name}">
                     <h3>${product.name}</h3>
-                    <p style="color:#27ae60; font-weight:bold; font-size:18px;">KSh ${product.price.toLocaleString()}</p>
-                    <p style="text-decoration:line-through; color:#999; font-size:14px;">KSh ${product.oldPrice.toLocaleString()}</p>
+                    <p class="price">KSh ${product.price.toLocaleString()}</p>
+                    <p style="font-size:14px; color:#666;">${product.description}</p>
+                    <button onclick="buyNow('${product.name}', ${product.price})" 
+                            style="background:#27ae60; color:white; border:none; padding:12px; width:100%; border-radius:10px; margin-top:10px;">
+                        Buy Now
+                    </button>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        function buyNow(name, price) {
+            if (confirm(`Buy ${name} for KSh ${price.toLocaleString()}?\n\n(This is a demo)`)) {
+                alert("✅ Order placed successfully!\n\nThank you for shopping at Kenya Market.");
+            }
         }
 
         window.onload = renderProducts;
