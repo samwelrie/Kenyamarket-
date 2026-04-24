@@ -5,17 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kenya Market - Buy & Sell Locally</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: #0a66c2;
+                padding: 20px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="logo">Kenya Market</div>
-        <div class="nav-links" id="navMenu">
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-            <a href="seller-dashboard.html">Sell on Kenya Market</a>
+    <nav style="background:#0a66c2; padding:15px; display:flex; justify-content:space-between; align-items:center; color:white;">
+        <div class="logo" style="font-size:24px; font-weight:bold;">Kenya Market</div>
+        
+        <div id="navMenu" class="nav-links">
+            <a href="index.html" style="color:white; text-decoration:none;">Home</a>
+            <a href="products.html" style="color:white; text-decoration:none;">Products</a>
+            <a href="seller-dashboard.html" style="color:white; text-decoration:none;">Sell</a>
         </div>
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+        <button onclick="toggleMenu()" style="background:none; border:none; color:white; font-size:28px; cursor:pointer;">☰</button>
     </nav>
 
     <!-- Search Bar -->
@@ -38,47 +61,40 @@
 
     <!-- Products -->
     <div style="max-width:1200px; margin:30px auto; padding:0 20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2>Featured Products</h2>
-            <select id="priceFilter" style="padding:10px; border-radius:8px;">
-                <option value="">Sort by Price</option>
-                <option value="low">Price: Low to High</option>
-                <option value="high">Price: High to Low</option>
-            </select>
-        </div>
-
+        <h2 style="margin-bottom:20px;">Featured Products</h2>
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
     <script>
+        function toggleMenu() {
+            const menu = document.getElementById("navMenu");
+            menu.classList.toggle("active");
+        }
+
         const products = [
-            { id:1, name:"iPhone 13", price:45000, category:"Phones", image:"https://picsum.photos/id/20/300/300", rating:4.8 },
-            { id:2, name:"Wireless Headphones", price:3500, category:"Electronics", image:"https://picsum.photos/id/60/300/300", rating:4.5 },
-            { id:3, name:"Men's Leather Jacket", price:6500, category:"Fashion", image:"https://picsum.photos/id/201/300/300", rating:4.9 },
-            { id:4, name:"Smart LED TV 43 inch", price:28500, category:"Electronics", image:"https://picsum.photos/id/180/300/300", rating:4.7 },
-            { id:5, name:"Samsung Galaxy S22", price:52000, category:"Phones", image:"https://picsum.photos/id/29/300/300", rating:4.6 },
-            { id:6, name:"Modern Coffee Maker", price:4200, category:"Home", image:"https://picsum.photos/id/201/300/300", rating:4.3 }
+            { name: "Versace Eros Perfume", price: 4200, image: "https://picsum.photos/id/201/300/300" },
+            { name: "Nike Air Force 1", price: 5999, image: "https://picsum.photos/id/60/300/300" },
+            { name: "Samsung Galaxy A15", price: 17500, image: "https://picsum.photos/id/29/300/300" },
+            { name: "Sony Wireless Headphones", price: 3800, image: "https://picsum.photos/id/180/300/300" }
         ];
 
-        function displayProducts(filteredProducts) {
+        function displayProducts() {
             const container = document.getElementById("productsGrid");
             container.innerHTML = "";
 
-            filteredProducts.forEach(product => {
+            products.forEach(product => {
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.innerHTML = `
                     <img src="\( {product.image}" alt=" \){product.name}">
                     <h3>${product.name}</h3>
                     <p class="price">KSh ${product.price.toLocaleString()}</p>
-                    <p style="color:#27ae60; font-size:14px;">★ ${product.rating} • 234 sold</p>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // Initial load
-        window.onload = () => displayProducts(products);
+        window.onload = displayProducts;
     </script>
 </body>
 </html>
