@@ -7,72 +7,52 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Marquee -->
-    <div class="marquee">
-        <p>Free delivery on orders above KSh 2,000 • 50+ new products today • 24-hour customer support • Safe payment coming soon •</p>
-    </div>
-
-<!-- Navigation -->
     <nav>
         <div class="logo">Kenya Market</div>
         <button class="hamburger" onclick="toggleMenu()">☰</button>
         <div class="nav-links" id="navMenu">
             <a href="index.html">Home</a>
             <a href="products.html" class="active">Products</a>
-            <a href="#" onclick="showLogin()">Customer</a>
-            <a href="seller-dashboard.html">Seller</a>
+            <a href="seller-dashboard.html">Sell</a>
         </div>
     </nav>
 
-    <div style="padding: 25px; max-width: 1200px; margin: 0 auto;">
-        <input type="text" id="searchBar" placeholder="Search products..." 
-               style="width:100%; padding:15px; font-size:18px; margin-bottom:25px; border-radius:12px; border:1px solid #ddd;">
+    <div style="padding:20px; max-width:1100px; margin:0 auto;">
+        <input type="text" id="searchInput" placeholder="Search products..." 
+               style="width:100%; padding:15px; font-size:17px; border-radius:50px; border:1px solid #ddd; margin-bottom:20px;">
 
+        <h2 style="margin:20px 0 15px;">All Products</h2>
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
-    <script src="app.js"></script>
     <script>
         const products = [
-            { name: "Versace Eros Perfume", price: "KSh 4,200", oldPrice: "KSh 6,500", img: "https://picsum.photos/id/1015/400/300" },
-            { name: "Nike Air Force 1", price: "KSh 5,999", oldPrice: "KSh 8,900", img: "https://picsum.photos/id/201/400/300" },
-            { name: "Samsung Galaxy A15", price: "KSh 17,500", oldPrice: "KSh 22,000", img: "https://picsum.photos/id/160/400/300" },
-            { name: "Sony Wireless Headphones", price: "KSh 3,800", oldPrice: "KSh 5,500", img: "https://picsum.photos/id/367/400/300" },
-            { name: "Leather Jacket", price: "KSh 4,500", oldPrice: "KSh 7,200", img: "https://picsum.photos/id/201/400/300" }
+            { name: "Versace Eros Perfume", price: 4200, oldPrice: 6500, image: "https://picsum.photos/id/20/300/300" },
+            { name: "Nike Air Force 1", price: 5999, oldPrice: 8900, image: "https://picsum.photos/id/60/300/300" },
+            { name: "Samsung Galaxy A15", price: 17500, oldPrice: 22000, image: "https://picsum.photos/id/29/300/300" },
+            { name: "Sony Wireless Headphones", price: 3800, oldPrice: 5500, image: "https://picsum.photos/id/180/300/300" },
+            { name: "Leather Jacket", price: 4500, oldPrice: 7200, image: "https://picsum.photos/id/201/300/300" },
+            { name: "Diamond Ring", price: 30000, oldPrice: 45000, image: "https://picsum.photos/id/237/300/300" }
         ];
 
-        function displayProducts(filteredProducts) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
+        function renderProducts() {
+            const container = document.getElementById("productsGrid");
+            container.innerHTML = "";
 
-            filteredProducts.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
+            products.forEach(product => {
+                const card = document.createElement("div");
+                card.className = "product-card";
                 card.innerHTML = `
-                    <img src="\( {product.img}" alt=" \){product.name}">
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p>
-                            <span class="old-price">${product.oldPrice}</span>
-                            <span class="price">${product.price}</span>
-                        </p>
-                    </div>
+                    <img src="\( {product.image}" alt=" \){product.name}">
+                    <h3>${product.name}</h3>
+                    <p style="color:#27ae60; font-weight:bold;">KSh ${product.price.toLocaleString()}</p>
+                    ${product.oldPrice ? `<p style="text-decoration:line-through; color:#999; font-size:14px;">KSh ${product.oldPrice.toLocaleString()}</p>` : ''}
                 `;
-                card.onclick = () => showLogin();
-                grid.appendChild(card);
+                container.appendChild(card);
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            displayProducts(products);
-
-            const searchBar = document.getElementById('searchBar');
-            searchBar.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-                displayProducts(filtered);
-            });
-        });
+        window.onload = renderProducts;
     </script>
 </body>
 </html>
