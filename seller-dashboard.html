@@ -7,11 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
         <div class="logo">Kenya Market</div>
-        <div style="display:flex; align-items:center; gap:15px;">
-            <span id="sellerName" style="color:white; font-weight:500;"></span>
-            <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding:10px 18px; border-radius:8px;">Logout</button>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <div class="nav-links" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="seller-dashboard.html" class="active">Seller Dashboard</a>
+            <a href="#" onclick="logout()" style="background:#e74c3c; color:white; padding:8px 16px; border-radius:8px;">Logout</a>
         </div>
     </nav>
 
@@ -140,4 +144,4 @@
         window.onload = loadDashboard;
     </script>
 </body>
-                    </html>
+    </html>
