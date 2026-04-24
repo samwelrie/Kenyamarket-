@@ -11,42 +11,42 @@
         <div class="logo">Kenya Market</div>
         <div style="display:flex; align-items:center; gap:15px;">
             <span id="sellerName" style="color:white; font-weight:500;"></span>
-            <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding:10px 20px; border-radius:8px;">Logout</button>
+            <button onclick="logout()" class="logout-btn">Logout</button>
         </div>
     </nav>
 
-    <div style="max-width:1200px; margin:40px auto; padding:0 20px;">
+    <div style="max-width:1100px; margin:30px auto; padding:0 20px;">
         <h1>Seller Dashboard</h1>
-        <p id="welcomeText" style="font-size:18px; color:#27ae60; margin-bottom:30px;"></p>
+        <p id="welcomeText" style="font-size:18px; color:#27ae60; margin-bottom:30px;">Welcome back, Mike Seller!</p>
 
-        <!-- Big Add Product Box -->
-        <div onclick="showAddForm()" class="add-product-box">
-            <div class="plus-sign">+</div>
-            <p><strong>Add New Product</strong></p>
-            <small>Click to upload product with image</small>
+        <!-- Big Add Box -->
+        <div onclick="showAddForm()" style="background:#f0f8ff; border:2px dashed #0a66c2; border-radius:16px; padding:40px; text-align:center; margin-bottom:30px; cursor:pointer;">
+            <div style="font-size:60px; color:#0a66c2; margin-bottom:10px;">+</div>
+            <h3 style="color:#0a66c2;">Add New Product</h3>
+            <p style="color:#555;">Click here to upload product with image</p>
         </div>
 
-        <!-- Add Product Form -->
-        <div id="addForm" class="add-form">
+        <!-- Form -->
+        <div id="addForm" style="display:none; background:white; padding:30px; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
             <h2>Add New Product</h2>
             
-            <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('imageInput').click()">
+            <div style="border:2px dashed #ddd; border-radius:12px; padding:30px; text-align:center; margin:20px 0; cursor:pointer;" onclick="document.getElementById('imageInput').click()">
                 <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="previewImage(event)">
-                <div id="imagePreview"></div>
-                <p>📸 Click to upload product image</p>
+                <div id="imagePreview" style="margin-bottom:10px;"></div>
+                <p style="color:#666;">📸 Click to upload product image</p>
             </div>
 
-            <input type="text" id="productName" placeholder="Product Name">
-            <input type="text" id="productPrice" placeholder="Price (e.g. KSh 3,500)">
-            <textarea id="productDesc" placeholder="Description"></textarea>
+            <input type="text" id="productName" placeholder="Product Name" style="width:100%; padding:14px; margin:10px 0; border-radius:8px;">
+            <input type="text" id="productPrice" placeholder="Price (e.g. KSh 3,500)" style="width:100%; padding:14px; margin:10px 0; border-radius:8px;">
+            <textarea id="productDesc" placeholder="Description" style="width:100%; padding:14px; height:90px; margin:10px 0; border-radius:8px;"></textarea>
             
-            <div class="form-buttons">
-                <button onclick="addProduct()" class="post-btn">Post Product</button>
-                <button onclick="hideAddForm()" class="cancel-btn">Cancel</button>
+            <div style="margin-top:25px; display:flex; gap:12px;">
+                <button onclick="addProduct()" style="flex:1; background:#27ae60; color:white; padding:16px; border:none; border-radius:12px; font-size:17px; font-weight:bold;">Post Product</button>
+                <button onclick="hideAddForm()" style="flex:1; background:#95a5a6; color:white; padding:16px; border:none; border-radius:12px; font-size:17px;">Cancel</button>
             </div>
         </div>
 
-        <h2 style="margin:40px 0 20px;">My Products</h2>
+        <h2 style="margin:40px 0 15px;">My Products</h2>
         <div id="myProducts" class="products-grid"></div>
     </div>
 
@@ -54,36 +54,20 @@
     <script>
         let myProducts = [];
 
-        function loadDashboard() {
-            const user = JSON.parse(localStorage.getItem("currentUser"));
-            if (!user || user.role !== "seller") {
-                window.location.href = "login.html";
-                return;
-            }
-
-            document.getElementById("sellerName").textContent = user.name;
-            document.getElementById("welcomeText").innerHTML = `Welcome back, <strong>${user.name}</strong>!`;
-
-            myProducts = JSON.parse(localStorage.getItem("sellerProducts")) || [];
-            displayProducts();
-        }
-
         function showAddForm() {
             document.getElementById("addForm").style.display = "block";
-            document.getElementById("imagePreview").innerHTML = "";
         }
 
         function hideAddForm() {
             document.getElementById("addForm").style.display = "none";
         }
 
-        function previewImage(event) {
-            const file = event.target.files[0];
+        function previewImage(e) {
+            const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById("imagePreview").innerHTML = 
-                        `<img src="${e.target.result}" style="max-width:100%; max-height:180px; border-radius:8px;">`;
+                reader.onload = function(ev) {
+                    document.getElementById("imagePreview").innerHTML = `<img src="${ev.target.result}" style="max-height:160px; border-radius:8px;">`;
                 };
                 reader.readAsDataURL(file);
             }
@@ -94,7 +78,7 @@
             const price = document.getElementById("productPrice").value.trim();
 
             if (!name || !price) {
-                alert("Product name and price are required");
+                alert("Please enter product name and price");
                 return;
             }
 
@@ -108,7 +92,6 @@
             hideAddForm();
             displayProducts();
 
-            // Clear form
             document.getElementById("productName").value = "";
             document.getElementById("productPrice").value = "";
             document.getElementById("productDesc").value = "";
@@ -119,11 +102,6 @@
             const container = document.getElementById("myProducts");
             container.innerHTML = "";
 
-            if (myProducts.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:#777; padding:40px;">No products added yet.</p>`;
-                return;
-            }
-
             myProducts.forEach((product, index) => {
                 const card = document.createElement("div");
                 card.className = "product-card";
@@ -131,7 +109,7 @@
                     <h3>${product.name}</h3>
                     <p class="price">${product.price}</p>
                     <small>${product.description}</small>
-                    <button onclick="deleteProduct(${index})" class="delete-btn">Delete</button>
+                    <button onclick="deleteProduct(${index})" style="background:#e74c3c; color:white; padding:8px 16px; border:none; border-radius:8px; margin-top:8px;">Delete</button>
                 `;
                 container.appendChild(card);
             });
@@ -145,7 +123,12 @@
             }
         }
 
-        window.onload = loadDashboard;
+        window.onload = () => {
+            const user = JSON.parse(localStorage.getItem("currentUser"));
+            if (user) document.getElementById("sellerName").textContent = user.name;
+            myProducts = JSON.parse(localStorage.getItem("sellerProducts")) || [];
+            displayProducts();
+        };
     </script>
 </body>
-                    </html>
+    </html>
