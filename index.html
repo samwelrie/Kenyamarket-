@@ -5,70 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kenya Market - Buy & Sell Locally</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background: #0a66c2;
-                padding: 20px;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav style="background:#0a66c2; padding:15px; display:flex; justify-content:space-between; align-items:center; color:white;">
-        <div class="logo" style="font-size:24px; font-weight:bold;">Kenya Market</div>
-        
-        <div id="navMenu" class="nav-links">
-            <a href="index.html" style="color:white; text-decoration:none;">Home</a>
-            <a href="products.html" style="color:white; text-decoration:none;">Products</a>
-            <a href="seller-dashboard.html" style="color:white; text-decoration:none;">Sell</a>
+    <nav>
+        <div class="logo">Kenya Market</div>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <div class="nav-links" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="seller-dashboard.html">Sell</a>
         </div>
-
-        <button onclick="toggleMenu()" style="background:none; border:none; color:white; font-size:28px; cursor:pointer;">☰</button>
     </nav>
 
-    <!-- Search Bar -->
-    <div style="background:#0a66c2; padding:20px 0; text-align:center;">
+    <!-- Hero Section -->
+    <header style="background: linear-gradient(135deg, #0a66c2, #1e90ff); color:white; text-align:center; padding:80px 20px;">
+        <h1 style="font-size:42px; margin-bottom:10px;">Buy & Sell Anything in Kenya</h1>
+        <p style="font-size:20px; margin-bottom:30px;">The easiest marketplace to buy and sell locally</p>
+        
+        <!-- Search Bar -->
         <input type="text" id="searchInput" placeholder="Search products..." 
-               style="width:70%; max-width:700px; padding:15px; font-size:17px; border-radius:50px; border:none;">
-    </div>
+               style="width:80%; max-width:700px; padding:16px; font-size:18px; border-radius:50px; border:none; margin-bottom:30px;">
+        
+        <button onclick="goToProducts()" style="background:white; color:#0a66c2; padding:15px 35px; font-size:18px; border:none; border-radius:50px; font-weight:bold;">
+            Browse Products
+        </button>
+    </header>
 
     <!-- Categories -->
-    <div style="padding:20px; text-align:center; background:white;">
-        <h2 style="margin-bottom:15px;">Shop by Category</h2>
-        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;">
+    <div style="padding:30px 20px; text-align:center; background:white;">
+        <h2>Shop by Category</h2>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px; margin-top:20px;">
             <div class="category">📱 Phones & Accessories</div>
             <div class="category">👟 Fashion</div>
             <div class="category">🏠 Home & Kitchen</div>
             <div class="category">💻 Electronics</div>
-            <div class="category">🛵 Motorbikes</div>
+            <div class="category">🛵 Motorbikes & Vehicles</div>
         </div>
     </div>
 
-    <!-- Products -->
+    <!-- Featured Products -->
     <div style="max-width:1200px; margin:30px auto; padding:0 20px;">
-        <h2 style="margin-bottom:20px;">Featured Products</h2>
+        <h2>Featured Products</h2>
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
+    <!-- Social Proof -->
+    <div style="background:#f8f9fa; padding:40px 20px; text-align:center;">
+        <h2>Trusted by Kenyans</h2>
+        <p style="font-size:18px; margin:20px 0;">"Best place to buy and sell in Kenya" - 500+ happy users</p>
+    </div>
+
+    <script src="app.js"></script>
     <script>
         function toggleMenu() {
             const menu = document.getElementById("navMenu");
             menu.classList.toggle("active");
+        }
+
+        function goToProducts() {
+            window.location.href = "products.html";
         }
 
         const products = [
@@ -97,4 +93,4 @@
         window.onload = displayProducts;
     </script>
 </body>
-</html>
+                </html>
