@@ -18,52 +18,37 @@
     </nav>
 
     <div style="padding:20px; max-width:1100px; margin:0 auto;">
-        <input type="text" id="searchInput" placeholder="Search products..." 
-               style="width:100%; padding:15px; font-size:17px; border:1px solid #ddd; border-radius:50px; margin-bottom:25px;">
+        <input type="text" id="searchInput" placeholder="Search products..." style="width:100%; padding:15px; font-size:17px; border-radius:50px; border:1px solid #ddd; margin-bottom:25px;">
 
         <h2>All Products</h2>
         <div id="productsGrid" class="products-grid"></div>
     </div>
 
     <script>
-        function renderProducts() {
-            const products = JSON.parse(localStorage.getItem("marketProducts")) || [];
-            const container = document.getElementById("productsGrid");
-            container.innerHTML = "";
+        const products = [
+            { name: "Versace Eros Perfume", price: "KSh 4,200", oldPrice: "KSh 6,500", image: "https://picsum.photos/id/201/300/300" },
+            { name: "Nike Air Force 1", price: "KSh 5,999", oldPrice: "KSh 8,900", image: "https://picsum.photos/id/60/300/300" },
+            { name: "Samsung Galaxy A15", price: "KSh 17,500", oldPrice: "KSh 22,000", image: "https://picsum.photos/id/29/300/300" },
+            { name: "Sony Wireless Headphones", price: "KSh 3,800", oldPrice: "KSh 5,500", image: "https://picsum.photos/id/180/300/300" }
+        ];
 
-            if (products.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:#777; padding:60px;">No products available yet.<br>Sellers haven't posted anything.</p>`;
-                return;
-            }
+        function renderProducts() {
+            const grid = document.getElementById("productsGrid");
+            grid.innerHTML = "";
 
             products.forEach(product => {
                 const card = document.createElement("div");
                 card.className = "product-card";
-                card.innerHTML = `
-                    <h3>${product.name}</h3>
-                    <p class="price">KSh ${product.price.toLocaleString()}</p>
-                    <p style="font-size:14px; color:#666;">${product.description}</p>
-                    <button onclick="buyNow('${product.name}', ${product.price})" 
-                            style="background:#27ae60; color:white; border:none; padding:12px; width:100%; border-radius:10px; margin-top:10px;">
-                        Buy Now
-                    </button>
-                `;
-                container.appendChild(card);
+                card.innerHTML = 
+                    '<img src="' + product.image + '" alt="' + product.name + '">' +
+                    '<h3>' + product.name + '</h3>' +
+                    '<p class="price">' + product.price + '</p>' +
+                    '<p style="text-decoration:line-through; color:#999;">' + product.oldPrice + '</p>';
+                grid.appendChild(card);
             });
         }
 
-        function buyNow(name, price) {
-            if (confirm(`Buy ${name} for KSh ${price.toLocaleString()}?\n\n(This is a demo)`)) {
-                alert("✅ Order placed successfully!\n\nThank you for shopping at Kenya Market.");
-            }
-        }
-
         window.onload = renderProducts;
-    <script>
-function toggleMenu() {
-    const nav = document.getElementById("navMenu");
-    if (nav) nav.classList.toggle("active");
-}
-</script>
+    </script>
 </body>
 </html>
