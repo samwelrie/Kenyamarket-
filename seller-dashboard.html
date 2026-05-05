@@ -1,131 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Dashboard - Kenya Market</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KenyaMarket Seller Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+  </style>
 </head>
-<body>
-    <nav>
-        <div class="logo">Kenya Market</div>
-        <div style="display:flex; align-items:center; gap:15px;">
-            <span id="sellerName" style="color:white; font-weight:500;"></span>
-            <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding:10px 18px; border-radius:8px;">Logout</button>
+<body class="bg-gray-50">
+
+<div class="flex h-screen">
+
+  <!-- Sidebar -->
+  <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+    <div class="p-6 border-b">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="KenyaMarket" class="h-10 w-auto">
+        <div>
+          <span class="text-xl font-bold text-red-600">KenyaMarket</span>
+          <p class="text-xs text-green-600 font-medium">SELLER DASHBOARD</p>
         </div>
+      </div>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+      <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-xl font-medium">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl">
+        <i class="fas fa-box"></i> My Products
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl">
+        <i class="fas fa-plus"></i> Add Product
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl relative">
+        <i class="fas fa-comments"></i> Orders / Messages
+        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">5</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl">
+        <i class="fas fa-chart-bar"></i> Analytics
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl">
+        <i class="fas fa-wallet"></i> Earnings
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl">
+        <i class="fas fa-star"></i> Reviews
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl">
+        <i class="fas fa-cog"></i> Settings
+      </a>
     </nav>
 
-    <div style="max-width:1100px; margin:30px auto; padding:0 20px;">
-        <h1>Seller Dashboard</h1>
-        <p id="welcomeText" style="font-size:18px; color:#27ae60; margin-bottom:30px;"></p>
-
-        <!-- Big Add Button -->
-        <div onclick="showAddForm()" style="background:#f0f8ff; border:3px dashed #0a66c2; border-radius:16px; padding:50px 20px; text-align:center; margin-bottom:40px; cursor:pointer;">
-            <div style="font-size:70px; color:#0a66c2; margin-bottom:10px;">+</div>
-            <h2 style="color:#0a66c2;">Add New Product</h2>
-            <p style="color:#555;">Upload product with image</p>
+    <!-- Bottom Seller Info -->
+    <div class="p-4 border-t">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-xl">👤</div>
+        <div>
+          <p class="font-medium">John Mwangi</p>
+          <p class="text-xs text-green-600">New Seller</p>
         </div>
+      </div>
+      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-2xl text-sm font-medium flex items-center justify-center gap-2">
+        <i class="fas fa-store"></i> View Store
+      </button>
+    </div>
+  </div>
 
-        <h2>My Products</h2>
-        <div id="myProducts" class="products-grid"></div>
+  <!-- Main Content -->
+  <div class="flex-1 overflow-auto">
+
+    <!-- Top Navigation -->
+    <div class="bg-white border-b px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4 flex-1 max-w-md">
+        <button class="text-gray-500"><i class="fas fa-bars text-xl"></i></button>
+        <div class="relative flex-1">
+          <input type="text" placeholder="Search for anything..." 
+                 class="w-full bg-gray-100 border-0 rounded-2xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-blue-500">
+          <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <button onclick="alert('Add Product clicked')" 
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-2xl flex items-center gap-2 font-medium">
+          <i class="fas fa-plus"></i> Add Product
+        </button>
+        
+        <button class="text-gray-600 hover:text-gray-800"><i class="fas fa-bell text-xl"></i></button>
+        <button class="text-gray-600 hover:text-gray-800"><i class="fas fa-comment-dots text-xl"></i></button>
+        
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">👤</div>
+          <div>
+            <p class="text-sm font-medium">John Mwangi</p>
+            <p class="text-xs text-gray-500 -mt-1">Seller</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Add Product Form -->
-    <div id="addForm" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center;">
-        <div style="background:white; padding:30px; border-radius:16px; width:90%; max-width:420px;">
-            <h2>Add New Product</h2>
-            <input type="text" id="productName" placeholder="Product Name" style="width:100%; padding:14px; margin:10px 0;">
-            <input type="text" id="productPrice" placeholder="Price (KSh)" style="width:100%; padding:14px; margin:10px 0;">
-            <textarea id="productDesc" placeholder="Description" style="width:100%; padding:14px; height:90px; margin:10px 0;"></textarea>
-            
-            <div style="margin-top:20px; display:flex; gap:12px;">
-                <button onclick="addProduct()" style="flex:1; background:#27ae60; color:white; padding:16px; border:none; border-radius:12px;">Post Product</button>
-                <button onclick="hideAddForm()" style="flex:1; background:#95a5a6; color:white; padding:16px; border:none; border-radius:12px;">Cancel</button>
+    <!-- Dashboard Content -->
+    <div class="p-8">
+
+      <div class="flex justify-between items-start mb-8">
+        <div>
+          <h1 class="text-3xl font-bold">Welcome back, John! 👋</h1>
+          <p class="text-gray-600">Here's what's happening with your store today.</p>
+        </div>
+        <div class="bg-white px-4 py-2 rounded-2xl border text-sm flex items-center gap-2">
+          May 1 - May 31, 2025 <i class="fas fa-calendar"></i>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-3xl">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl">💰</div>
+            <div>
+              <p class="text-sm text-gray-600">Total Sales</p>
+              <p class="text-2xl font-bold">KSh 0.00</p>
+              <p class="text-xs text-gray-500">- 0% this month</p>
             </div>
+          </div>
         </div>
+        <div class="bg-white p-6 rounded-3xl">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-2xl">🛍️</div>
+            <div>
+              <p class="text-sm text-gray-600">Active Listings</p>
+              <p class="text-2xl font-bold">0</p>
+              <p class="text-xs text-gray-500">- 0% this month</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-3xl">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl">👁️</div>
+            <div>
+              <p class="text-sm text-gray-600">Total Views</p>
+              <p class="text-2xl font-bold">0</p>
+              <p class="text-xs text-gray-500">- 0% this month</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-3xl">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-2xl">💬</div>
+            <div>
+              <p class="text-sm text-gray-600">Messages</p>
+              <p class="text-2xl font-bold">0</p>
+              <p class="text-xs text-gray-500">- 0% this month</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Sales Overview -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-3xl">
+          <div class="flex justify-between mb-6">
+            <h2 class="font-semibold">Sales Overview</h2>
+            <select class="bg-gray-100 px-4 py-1 rounded-xl text-sm">
+              <option>This Month</option>
+            </select>
+          </div>
+          <div class="h-64 flex items-center justify-center border border-dashed border-gray-300 rounded-2xl">
+            <p class="text-gray-400">Line Chart Goes Here (Sales Trend)</p>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="bg-white p-6 rounded-3xl">
+          <div class="flex justify-between mb-4">
+            <h2 class="font-semibold">Recent Orders</h2>
+            <a href="#" class="text-blue-600 text-sm">View All</a>
+          </div>
+          <div class="flex flex-col items-center justify-center py-12 text-center">
+            <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center text-4xl mb-4">📦</div>
+            <p class="font-medium">No orders yet</p>
+            <p class="text-sm text-gray-500">Orders from buyers will appear here.</p>
+          </div>
+        </div>
+
+        <!-- Today's Tasks -->
+        <div class="bg-white p-6 rounded-3xl">
+          <h2 class="font-semibold mb-4">Today's Tasks</h2>
+          <div class="space-y-4">
+            <div class="flex gap-3">
+              <input type="checkbox" class="mt-1">
+              <div>
+                <p class="text-sm">Add your first product</p>
+                <p class="text-xs text-gray-500">List a product to start selling</p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <input type="checkbox" class="mt-1">
+              <div>
+                <p class="text-sm">Complete your profile</p>
+                <p class="text-xs text-gray-500">Add store details and profile picture</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Your Listings -->
+        <div class="bg-white p-6 rounded-3xl text-center">
+          <div class="w-20 h-20 mx-auto bg-gray-100 rounded-3xl flex items-center justify-center text-4xl mb-4">🛍️</div>
+          <p class="font-medium">No products yet</p>
+          <p class="text-sm text-gray-500 mb-6">Add your first product and start reaching buyers.</p>
+          <button class="bg-blue-600 text-white px-6 py-3 rounded-2xl flex items-center gap-2 mx-auto">
+            <i class="fas fa-plus"></i> Add Your First Product
+          </button>
+        </div>
+
+        <!-- Recent Messages -->
+        <div class="bg-white p-6 rounded-3xl text-center">
+          <div class="w-20 h-20 mx-auto bg-gray-100 rounded-3xl flex items-center justify-center text-4xl mb-4">💬</div>
+          <p class="font-medium">No messages yet</p>
+          <button class="bg-blue-600 text-white px-6 py-3 rounded-2xl mt-6">Go to Messages</button>
+        </div>
+
+        <!-- Grow Your Sales -->
+        <div class="bg-gradient-to-br from-blue-900 to-black text-white p-6 rounded-3xl">
+          <h3 class="font-semibold mb-2">Grow Your Sales</h3>
+          <p class="text-sm opacity-90 mb-6">Promote your products to thousands of buyers across Kenya.</p>
+          <button class="bg-white text-black px-6 py-3 rounded-2xl font-medium">Upgrade Now</button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <script src="app.js"></script>
-    <script>
-        let myProducts = [];
-
-        function loadDashboard() {
-            const user = JSON.parse(localStorage.getItem("currentUser"));
-            if (!user || user.role !== "seller") {
-                window.location.href = "login.html";
-                return;
-            }
-
-            document.getElementById("sellerName").textContent = user.name;
-            document.getElementById("welcomeText").innerHTML = `Welcome back, <strong>${user.name}</strong>!`;
-
-            myProducts = JSON.parse(localStorage.getItem("marketProducts")) || [];
-            displayProducts();
-        }
-
-        function showAddForm() {
-            document.getElementById("addForm").style.display = "flex";
-        }
-
-        function hideAddForm() {
-            document.getElementById("addForm").style.display = "none";
-        }
-
-        function addProduct() {
-            const name = document.getElementById("productName").value.trim();
-            const price = document.getElementById("productPrice").value.trim();
-
-            if (!name || !price) {
-                alert("Product name and price are required");
-                return;
-            }
-
-            myProducts.unshift({
-                name: name,
-                price: price,
-                description: document.getElementById("productDesc").value.trim() || "No description"
-            });
-
-            localStorage.setItem("marketProducts", JSON.stringify(myProducts));
-            hideAddForm();
-            displayProducts();
-
-            document.getElementById("productName").value = "";
-            document.getElementById("productPrice").value = "";
-            document.getElementById("productDesc").value = "";
-        }
-
-        function displayProducts() {
-            const container = document.getElementById("myProducts");
-            container.innerHTML = "";
-
-            if (myProducts.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:#777; padding:40px;">No products yet. Add your first one!</p>`;
-                return;
-            }
-
-            myProducts.forEach((product, index) => {
-                const card = document.createElement("div");
-                card.className = "product-card";
-                card.innerHTML = `
-                    <h3>${product.name}</h3>
-                    <p class="price">KSh ${product.price}</p>
-                    <small>${product.description}</small>
-                    <button onclick="deleteProduct(${index})" style="background:#e74c3c; color:white; padding:8px 16px; border:none; border-radius:8px; margin-top:10px;">Delete</button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function deleteProduct(index) {
-            if (confirm("Delete this product?")) {
-                myProducts.splice(index, 1);
-                localStorage.setItem("marketProducts", JSON.stringify(myProducts));
-                displayProducts();
-            }
-        }
-
-        window.onload = loadDashboard;
-    </script>
 </body>
-</html>
+        </html>
