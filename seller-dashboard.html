@@ -214,4 +214,78 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="js/products.js"></script>
 <script src="js/dashboard.js"></script>
 </body>
-              </html>
+</html>
+// ===================== MODALS =====================
+KenyaMarket.showProductModal = function(product) {
+    let modal = document.getElementById('product-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'product-modal';
+        modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]';
+        document.body.appendChild(modal);
+    }
+
+    modal.innerHTML = `
+        <div class="bg-white rounded-3xl max-w-lg w-full mx-4 overflow-hidden">
+            <div class="relative">
+                <img src="${product.img}" class="w-full h-80 object-cover">
+                <button onclick="this.closest('#product-modal').remove()" 
+                        class="absolute top-4 right-4 bg-white rounded-full p-2 shadow">✕</button>
+            </div>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold">${product.name}</h2>
+                <p class="text-orange-600 text-3xl font-bold mt-2">KSh ${product.price.toLocaleString()}</p>
+                <p class="text-gray-600 mt-4">${product.seller || 'Verified Seller'}</p>
+                
+                <div class="flex gap-3 mt-8">
+                    <button onclick="KenyaMarket.addToWishlist(${product.id}); this.closest('#product-modal').remove()" 
+                            class="flex-1 py-4 border border-gray-300 rounded-2xl font-medium">❤️ Wishlist</button>
+                    <button onclick="KenyaMarket.showToast('Message sent to seller!'); this.closest('#product-modal').remove()" 
+                            class="flex-1 py-4 bg-orange-500 text-white rounded-2xl font-medium">Contact Seller</button>
+                </div>
+            </div>
+        </div>
+    `;
+};
+
+KenyaMarket.showAddProductModal = function() {
+    let modal = document.getElementById('add-product-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'add-product-modal';
+        modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]';
+        document.body.appendChild(modal);
+    }
+
+    modal.innerHTML = `
+        <div class="bg-white rounded-3xl max-w-md w-full mx-4 p-8">
+            <h2 class="text-2xl font-bold mb-6">Add New Product</h2>
+            <input id="new-product-name" placeholder="Product Name" class="w-full p-4 border rounded-2xl mb-4">
+            <input id="new-product-price" type="number" placeholder="Price (KSh)" class="w-full p-4 border rounded-2xl mb-4">
+            <textarea id="new-product-desc" placeholder="Description" class="w-full p-4 border rounded-2xl mb-6" rows="3"></textarea>
+            
+            <div class="flex gap-3">
+                <button onclick="this.closest('#add-product-modal').remove()" 
+                        class="flex-1 py-4 border rounded-2xl">Cancel</button>
+                <button onclick="KenyaMarket.saveNewProduct()" 
+                        class="flex-1 py-4 bg-orange-500 text-white rounded-2xl">Post Product</button>
+            </div>
+        </div>
+    `;
+};
+
+KenyaMarket.saveNewProduct = function() {
+    KenyaMarket.showToast("Product posted successfully! 🎉");
+    document.getElementById('add-product-modal').remove();
+};
+
+// Global Wishlist
+KenyaMarket.wishlist = JSON.parse(localStorage.getItem('km_wishlist')) || [];
+
+KenyaMarket.addToWishlist = function(id) {
+    if (!KenyaMarket.wishlist.includes(id)) {
+        KenyaMarket.wishlist.push(id);
+        localStorage.setItem('km_wishlist', JSON.stringify(KenyaMarket.wishlist));
+        KenyaMarket.showToast("Added to Wishlist ❤️");
+    }
+};
