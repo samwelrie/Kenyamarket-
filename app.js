@@ -1,4 +1,5 @@
 // ================== KenyaMarket - Core App.js ==================
+// Cleaned, Organized & Navigation Ready
 
 const KenyaMarket = {
     currentUser: null,
@@ -7,10 +8,12 @@ const KenyaMarket = {
         this.loadCurrentUser();
         this.setupNavigation();
         this.setupMobileMenu();
+        this.setupGlobalSearch();
         this.setupGlobalButtons();
-        console.log("✅ KenyaMarket initialized successfully");
+        console.log("✅ KenyaMarket Core Initialized");
     },
 
+    // ===================== AUTHENTICATION =====================
     loadCurrentUser() {
         const userData = localStorage.getItem("currentUser");
         if (userData) {
@@ -20,13 +23,8 @@ const KenyaMarket = {
     },
 
     updateUIBasedOnAuth() {
-        // Show/hide elements based on login status
-        document.querySelectorAll('.logged-in').forEach(el => {
-            el.style.display = this.currentUser ? 'flex' : 'none';
-        });
-        document.querySelectorAll('.logged-out').forEach(el => {
-            el.style.display = this.currentUser ? 'none' : 'flex';
-        });
+        document.querySelectorAll('.logged-in').forEach(el => el.style.display = 'flex');
+        document.querySelectorAll('.logged-out').forEach(el => el.style.display = 'none');
     },
 
     // ===================== NAVIGATION =====================
@@ -35,13 +33,12 @@ const KenyaMarket = {
     },
 
     setupNavigation() {
-        // All links with data-nav attribute
+        // Support for data-nav attributes and normal links
         document.querySelectorAll('a[data-nav], button[data-nav]').forEach(element => {
             element.addEventListener('click', (e) => {
-                const targetPage = element.getAttribute('data-nav');
-                if (targetPage) {
-                    this.navigateTo(targetPage);
-                }
+                e.preventDefault();
+                const target = element.getAttribute('data-nav');
+                if (target) this.navigateTo(target);
             });
         });
     },
@@ -59,7 +56,23 @@ const KenyaMarket = {
         }
     },
 
-    // ===================== AUTH =====================
+    // ===================== SEARCH =====================
+    setupGlobalSearch() {
+        const searchInput = document.getElementById('global-search');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        localStorage.setItem('km_search_query', query);
+                        this.navigateTo('products.html');
+                    }
+                }
+            });
+        }
+    },
+
+    // ===================== AUTH & LOGOUT =====================
     login(email, password) {
         if (email === "seller@kenya.com" && password === "123456") {
             localStorage.setItem("currentUser", JSON.stringify({ 
@@ -87,35 +100,39 @@ const KenyaMarket = {
         window.location.href = "login.html";
     },
 
-    // ===================== HELPER FUNCTIONS =====================
+    // ===================== HELPER =====================
     showToast(message, type = "success") {
         const toast = document.createElement("div");
-        toast.className = `toast toast-${type}`;
+        toast.style.cssText = `
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: ${type === 'success' ? '#28a745' : '#dc3545'};
+            color: white; padding: 14px 24px; border-radius: 8px;
+            z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        `;
         toast.textContent = message;
         document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.style.opacity = "0";
-            setTimeout(() => toast.remove(), 400);
-        }, 2500);
+        
+        setTimeout(() => toast.remove(), 2800);
     },
 
     setupGlobalButtons() {
-        // Logout buttons
+        // All logout buttons
         document.querySelectorAll('.logout-btn, #logout-btn').forEach(btn => {
             btn.addEventListener('click', () => this.logout());
         });
     }
 };
 
-// ===================== INITIALIZE =====================
+// ===================== INITIALIZE ON EVERY PAGE =====================
 document.addEventListener('DOMContentLoaded', () => {
     KenyaMarket.init();
 });
 
-// Make some functions globally available for backward compatibility
+// Global access for backward compatibility with your old code
 window.KenyaMarket = KenyaMarket;
+window.handleLogin = (email, password) => KenyaMarket.login(email, password);
 window.logout = () => KenyaMarket.logout();
+window.showLogin = () => KenyaMarket.navigateTo('login.html');
 window.toggleMenu = () => {
     const navMenu = document.getElementById("navMenu");
     const hamburger = document.getElementById("hamburger");
