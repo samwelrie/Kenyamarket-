@@ -1,5 +1,5 @@
-// ================== KenyaMarket - Core App.js ==================
-// Cleaned, Organized & Navigation Ready
+// js/app.js
+const API_BASE = "https://kenyamarket-backend.onrender.com";
 
 const KenyaMarket = {
     currentUser: null,
@@ -7,135 +7,56 @@ const KenyaMarket = {
     init() {
         this.loadCurrentUser();
         this.setupNavigation();
-        this.setupMobileMenu();
-        this.setupGlobalSearch();
-        this.setupGlobalButtons();
-        console.log("✅ KenyaMarket Core Initialized");
+        console.log("✅ KenyaMarket connected to backend");
     },
 
-    // ===================== AUTHENTICATION =====================
     loadCurrentUser() {
-        const userData = localStorage.getItem("currentUser");
-        if (userData) {
-            this.currentUser = JSON.parse(userData);
-            this.updateUIBasedOnAuth();
-        }
+        const user = localStorage.getItem('currentUser');
+        if (user) this.currentUser = JSON.parse(user);
     },
 
-    updateUIBasedOnAuth() {
-        document.querySelectorAll('.logged-in').forEach(el => el.style.display = 'flex');
-        document.querySelectorAll('.logged-out').forEach(el => el.style.display = 'none');
-    },
-
-    // ===================== NAVIGATION =====================
     navigateTo(page) {
         window.location.href = page;
     },
 
-    setupNavigation() {
-        // Support for data-nav attributes and normal links
-        document.querySelectorAll('a[data-nav], button[data-nav]').forEach(element => {
-            element.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = element.getAttribute('data-nav');
-                if (target) this.navigateTo(target);
+    async login(email, password) {
+        try {
+            const res = await fetch(`${API_BASE}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
             });
-        });
-    },
+            const data = await res.json();
 
-    // ===================== MOBILE MENU =====================
-    setupMobileMenu() {
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-
-        if (hamburger && navMenu) {
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                hamburger.classList.toggle('active');
-            });
-        }
-    },
-
-    // ===================== SEARCH =====================
-    setupGlobalSearch() {
-        const searchInput = document.getElementById('global-search');
-        if (searchInput) {
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const query = searchInput.value.trim();
-                    if (query) {
-                        localStorage.setItem('km_search_query', query);
-                        this.navigateTo('products.html');
-                    }
-                }
-            });
-        }
-    },
-
-    // ===================== AUTH & LOGOUT =====================
-    login(email, password) {
-        if (email === "seller@kenya.com" && password === "123456") {
-            localStorage.setItem("currentUser", JSON.stringify({ 
-                name: "Mike Seller", 
-                role: "seller",
-                email: email 
-            }));
-            window.location.href = "seller-dashboard.html";
-        } 
-        else if (email === "customer@kenya.com" && password === "123456") {
-            localStorage.setItem("currentUser", JSON.stringify({ 
-                name: "John Doe", 
-                role: "customer",
-                email: email 
-            }));
-            window.location.href = "index.html";
-        } 
-        else {
-            alert("Wrong email or password!\n\nDemo Accounts:\nSeller: seller@kenya.com / 123456\nCustomer: customer@kenya.com / 123456");
+            if (data.success) {
+                localStorage.setItem('currentUser', JSON.stringify(data.user));
+                this.currentUser = data.user;
+                window.location.href = data.user.role === 'seller' ? 'seller-dashboard.html' : 'customer-dashboard.html';
+            } else {
+                alert("Invalid credentials");
+            }
+        } catch (err) {
+            alert("Backend error. Using demo mode.");
+            // Fallback
+            const role = email.includes("seller") ? "seller" : "customer";
+            localStorage.setItem('currentUser', JSON.stringify({ name: email.split('@')[0], role }));
+            window.location.href = role === 'seller' ? 'seller-dashboard.html' : 'index.html';
         }
     },
 
     logout() {
-        localStorage.removeItem("currentUser");
-        window.location.href = "login.html";
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
     },
 
-    // ===================== HELPER =====================
-    showToast(message, type = "success") {
-        const toast = document.createElement("div");
-        toast.style.cssText = `
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: ${type === 'success' ? '#28a745' : '#dc3545'};
-            color: white; padding: 14px 24px; border-radius: 8px;
-            z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        `;
+    showToast(message) {
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1f2937;color:white;padding:14px 24px;border-radius:12px;z-index:9999;';
         toast.textContent = message;
         document.body.appendChild(toast);
-        
-        setTimeout(() => toast.remove(), 2800);
-    },
-
-    setupGlobalButtons() {
-        // All logout buttons
-        document.querySelectorAll('.logout-btn, #logout-btn').forEach(btn => {
-            btn.addEventListener('click', () => this.logout());
-        });
+        setTimeout(() => toast.remove(), 3000);
     }
 };
 
-// ===================== INITIALIZE ON EVERY PAGE =====================
-document.addEventListener('DOMContentLoaded', () => {
-    KenyaMarket.init();
-});
-
-// Global access for backward compatibility with your old code
+document.addEventListener('DOMContentLoaded', () => KenyaMarket.init());
 window.KenyaMarket = KenyaMarket;
-window.handleLogin = (email, password) => KenyaMarket.login(email, password);
-window.logout = () => KenyaMarket.logout();
-window.showLogin = () => KenyaMarket.navigateTo('login.html');
-window.toggleMenu = () => {
-    const navMenu = document.getElementById("navMenu");
-    const hamburger = document.getElementById("hamburger");
-    if (navMenu) navMenu.classList.toggle("active");
-    if (hamburger) hamburger.classList.toggle("active");
-};
