@@ -5,55 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - KenyaMarket</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <style>
-    body { font-family: system-ui, -apple-system, sans-serif; }
-  </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center">
-
-  <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 mx-4">
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-orange-600">🇰🇪 KenyaMarket</h1>
-      <p class="text-gray-600 mt-2">Sign in to your account</p>
+  <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold text-blue-600">🇰🇪 KenyaMarket</h1>
+      <p class="text-gray-600 mt-3">Sign in to continue</p>
     </div>
 
     <form id="login-form" class="space-y-6">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-        <input type="email" id="email" required
-               class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-orange-500 text-base"
-               placeholder="seller@kenya.com">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-        <input type="password" id="password" required
-               class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:border-orange-500 text-base"
-               placeholder="123456">
-      </div>
-
-      <button type="submit" 
-              class="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-2xl font-semibold text-lg transition">
-        Login
-      </button>
+      <input id="email" type="email" placeholder="Email" class="w-full p-5 border rounded-2xl" value="seller@kenya.com">
+      <input id="password" type="password" placeholder="Password" class="w-full p-5 border rounded-2xl" value="123456">
+      <button type="submit" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-semibold text-lg">Login</button>
     </form>
 
-    <div class="mt-6 text-center text-sm text-gray-600">
-      Don't have an account? 
-      <a href="#" class="text-orange-600 hover:underline">Sign up</a>
-    </div>
-
-    <div class="mt-8 p-4 bg-gray-100 rounded-2xl text-xs text-gray-600">
-      <strong>Demo Accounts:</strong><br>
-      👤 Buyer: <code>customer@kenya.com</code> / 123456<br>
-      🛒 Seller: <code>seller@kenya.com</code> / 123456
-    </div>
+    <p class="text-center text-sm text-gray-500 mt-8">
+      Demo: seller@kenya.com / customer@kenya.com<br>Password: 123456
+    </p>
   </div>
 
-  <!-- ================== SCRIPTS ================== -->
-  <script src="js/app.js"></script>
-  <script src="js/dashboard.js"></script>
-
+  <script>
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      if (email.includes('seller')) {
+        window.location.href = 'seller-dashboard.html';
+      } else {
+        window.location.href = 'customer-dashboard.html';
+      }
+    });
+  </script>
 </body>
 </html>
