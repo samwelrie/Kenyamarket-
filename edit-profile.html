@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile - KenyaMarket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <button onclick="history.back()" class="text-2xl">←</button>
+      <div class="font-bold text-xl">Edit Profile</div>
+      <button onclick="saveProfile()" class="text-blue-600 font-medium">Save</button>
+    </div>
+  </nav>
+
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mb-8">
+      <img src="https://i.pravatar.cc/120?u=brian" class="w-32 h-32 rounded-3xl mx-auto">
+      <button class="mt-3 text-blue-600 text-sm">Change Photo</button>
+    </div>
+
+    <div class="space-y-6">
+      <div>
+        <label class="block text-sm font-medium mb-2">Full Name</label>
+        <input type="text" value="Brian Omondi" class="w-full p-5 border rounded-2xl">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Phone Number</label>
+        <input type="tel" value="+254 712 345 678" class="w-full p-5 border rounded-2xl">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Email</label>
+        <input type="email" value="brian.omondi@email.com" class="w-full p-5 border rounded-2xl">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Location</label>
+        <input type="text" value="Nairobi, Kenya" class="w-full p-5 border rounded-2xl">
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function saveProfile() {
+      alert("✅ Profile updated successfully!");
+      history.back();
+    }
+  </script>
+</body>
+</html>
