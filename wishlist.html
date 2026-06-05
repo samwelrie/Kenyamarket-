@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist - KenyaMarket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <button onclick="history.back()" class="text-2xl">←</button>
+      <div class="font-bold text-xl">Wishlist ❤️</div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <div id="wishlist-items" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let wishlist = JSON.parse(localStorage.getItem('km_wishlist')) || [];
+
+    function renderWishlist() {
+      const container = document.getElementById('wishlist-items');
+      if (wishlist.length === 0) {
+        container.innerHTML = `<p class="text-center text-gray-500 py-20">Your wishlist is empty</p>`;
+        return;
+      }
+      container.innerHTML = wishlist.map((item, index) => `
+        <div class="bg-white rounded-3xl overflow-hidden shadow">
+          <img src="${item.img || 'https://picsum.photos/300/200'}" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="font-semibold">${item.name}</h3>
+            <p class="text-blue-600 font-bold">KSh ${item.price}</p>
+            <button onclick="removeFromWishlist(${index})" class="text-red-500 text-sm mt-3">Remove</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function removeFromWishlist(index) {
+      wishlist.splice(index, 1);
+      localStorage.setItem('km_wishlist', JSON.stringify(wishlist));
+      renderWishlist();
+    }
+
+    window.onload = renderWishlist;
+  </script>
+</body>
+</html>
