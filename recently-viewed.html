@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recently Viewed - KenyaMarket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <button onclick="history.back()" class="text-2xl">←</button>
+      <div class="font-bold text-xl">Recently Viewed</div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <div id="recent-items" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
+  </div>
+
+  <script>
+    let recent = JSON.parse(localStorage.getItem('km_recently_viewed')) || [
+      {name: "iPhone 13 Pro Max", price: 115000},
+      {name: "MacBook Air M2", price: 120000}
+    ];
+
+    function renderRecent() {
+      document.getElementById('recent-items').innerHTML = recent.map(item => `
+        <div class="bg-white rounded-3xl p-4 shadow">
+          <h3 class="font-semibold">${item.name}</h3>
+          <p class="text-blue-600 font-bold">KSh ${item.price}</p>
+        </div>
+      `).join('');
+    }
+
+    window.onload = renderRecent;
+  </script>
+</body>
+</html>
