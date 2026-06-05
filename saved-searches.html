@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Searches - KenyaMarket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <button onclick="history.back()" class="text-2xl">←</button>
+      <div class="font-bold text-xl">Saved Searches</div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <div id="saved-searches" class="space-y-4"></div>
+  </div>
+
+  <script>
+    let savedSearches = JSON.parse(localStorage.getItem('km_saved_searches')) || ["iPhone 13", "Laptop under 50k", "Fresh Avocados"];
+
+    function renderSavedSearches() {
+      const container = document.getElementById('saved-searches');
+      container.innerHTML = savedSearches.map((search, i) => `
+        <div onclick="searchNow('${search}')" class="bg-white p-5 rounded-2xl flex justify-between items-center cursor-pointer">
+          <span>${search}</span>
+          <button onclick="event.stopImmediatePropagation(); removeSearch(${i});" class="text-red-500">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function removeSearch(i) {
+      savedSearches.splice(i, 1);
+      localStorage.setItem('km_saved_searches', JSON.stringify(savedSearches));
+      renderSavedSearches();
+    }
+
+    function searchNow(term) {
+      localStorage.setItem('km_search_query', term);
+      window.location.href = '../public/products.html';
+    }
+
+    window.onload = renderSavedSearches;
+  </script>
+</body>
+</html>
